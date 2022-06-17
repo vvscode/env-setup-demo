@@ -1,7 +1,7 @@
 /**
  *
  */
-export function runApp(el) {
+export function runApp(el, el2) {
   /* eslint-disable-next-line no-param-reassign */
   el .innerHTML = `
     <div>
