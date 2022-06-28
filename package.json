@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "prettier . && eslint .",
+    "lint": "prettier . --check && eslint .",
     "lint:fix": "prettier . --write && eslint . --fix",
     "prepare": "husky install"
   },
@@ -40,6 +40,6 @@
   },
   "lint-staged": {
     "*.js": "eslint --fix",
-    "*.{js,css,md,html}": "prettier --write"
+    "*.{js,css,md,html,yml}": "prettier --write"
   }
 }
