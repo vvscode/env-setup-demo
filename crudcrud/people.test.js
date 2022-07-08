@@ -33,20 +33,27 @@ describe("CrudCrud: People", () => {
     });
   });
 
-  it("can update a person", async () => {
-    const createResponseData = await createPerson({ age, name });
-
-    const newName = getRandomName("new");
-    await updatePerson(createResponseData._id, {
-      ...createResponseData,
-      name: newName,
+  describe("Operation with person", () => {
+    let userData;
+    beforeEach(async () => {
+      userData = await createPerson({ age, name });
     });
+    it("can update a person", async () => {
+      const newName = getRandomName("new");
+      await updatePerson(userData._id, {
+        ...userData,
+        name: newName,
+      });
 
-    const readPersonResponseData = await readPerson(createResponseData._id);
-    expect(readPersonResponseData).toEqual({
-      age,
-      name: newName,
-      _id: createResponseData._id,
+      const readPersonResponseData = await readPerson(userData._id);
+      expect(readPersonResponseData).toEqual({
+        age,
+        name: newName,
+        _id: userData._id,
+      });
+    });
+    it("can delete user", () => {
+      // @todo
     });
   });
 });
