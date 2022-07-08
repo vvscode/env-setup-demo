@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/vvscode/env-setup-demo#readme",
   "dependencies": {
+    "jabber": "^1.4.0",
     "jest": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1",
     "node-fetch": "^2.6.7"
