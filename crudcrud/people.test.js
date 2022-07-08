@@ -7,23 +7,26 @@ async function fetchJSON(url, ...args) {
   return response.json();
 }
 
+function createPerson(data) {
+  return fetchJSON(`/people`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+function readPerson(id) {
+  return fetchJSON(`/people/${id}`);
+}
+
 describe("CrudCrud: People", () => {
   it("can create a person", async () => {
-    // создать фейковые данные
     const name = `${Math.random()}`;
     const age = Math.ceil(Math.random() * 100);
-    // отправить запрос на создание с этим данными
-    const createResponseData = await fetchJSON(`/people`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        age,
-      }),
-    });
-    // проверить ответ от запроса (что там есть наши данные)
+
+    const createResponseData = await createPerson({ age, name });
     expect(createResponseData).toEqual(
       expect.objectContaining({
         age,
@@ -31,11 +34,8 @@ describe("CrudCrud: People", () => {
         _id: expect.stringMatching(/\w+/),
       })
     );
-    // отправить запрос на чтение созданной персоны
-    const readPersonResponseData = await fetchJSON(
-      `/people/${createResponseData._id}`
-    );
-    // проверить ответ на данные, которые мы сгенерировали
+
+    const readPersonResponseData = readPerson(createResponseData._id);
     expect(readPersonResponseData).toEqual({
       age,
       name,
