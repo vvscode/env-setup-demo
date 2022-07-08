@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+const fetch = require("node-fetch").default;
 
 const BASE_URL = "https://crudcrud.com/api/e8d34148834e47c8b8eeb09ff6aba129";
 
@@ -19,4 +19,19 @@ export function createPerson(data) {
 
 export function readPerson(id) {
   return fetchJSON(`/people/${id}`);
+}
+
+export async function updatePerson(id, data) {
+  const { _id, ...dataWithoutId } = data;
+  const response = await fetch(`${BASE_URL}/people/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataWithoutId),
+  });
+  if (response.ok) {
+    return response;
+  }
+  throw new Error(`${response.status}: ${response.statusText}`);
 }
