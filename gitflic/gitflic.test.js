@@ -1,27 +1,28 @@
-
 import {
-getFormCSRF,
-signUpForm,
-checkSuccessRedirect,
-getEmailWithConfirmationLink,
-openConfirmationLink,
-generateUserDataWithEmail
-} from './utils/gitflic'
+  getFormCSRF,
+  signUpForm,
+  checkSuccessRedirect,
+  getEmailWithConfirmationLink,
+  openConfirmationLink,
+  generateUserDataWithEmail,
+} from "./utils/gitflic";
 
-describe('GitFlic.ru', () => {
-  describe('Registration', () => {
-    it('can create new user', async () => {
-      await generateUserDataWithEmail();
+jest.setTimeout(30_000);
 
-      await getFormCSRF();
+describe("GitFlic.ru", () => {
+  describe("Registration", () => {
+    it("can create new user", async () => {
+      const userData = await generateUserDataWithEmail();
 
-      await signUpForm();
+      const csrf = await getFormCSRF();
 
-      await checkSuccessRedirect();
+      const signUpResponse = await signUpForm(csrf, userData);
 
-      await getEmailWithConfirmationLink();
+      await checkSuccessRedirect(signUpResponse);
 
-      await openConfirmationLink();
-    })
-  })
-})
+      const link = await getEmailWithConfirmationLink(userData.email);
+
+      await openConfirmationLink(link);
+    });
+  });
+});
