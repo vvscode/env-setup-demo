@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { runApp } from "./runApp";
 
 describe("runApp", () => {
