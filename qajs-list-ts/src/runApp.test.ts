@@ -26,7 +26,7 @@ describe("runApp", () => {
   }
 
   function getParagraphs() {
-    return [...el.querySelectorAll("p")].map((pEl) => pEl.innerHTML);
+    return Array.from(el.querySelectorAll("p")).map((pEl) => pEl.innerHTML);
   }
 
   function clickButton() {
